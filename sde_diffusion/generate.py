@@ -18,7 +18,8 @@ import argparse
 from torchaudio.functional import resample
 
 from hubert_kmeans.model import create_hubert_kmeans_from_config
-from BigVGAN.bigvgan_wrapper import BigVGAN
+#from BigVGAN.bigvgan_wrapper import BigVGAN
+from BigVGAN.bigvgan_wrapper import BigVGANWrapper
 from fastsag import FastSAG
 from utils_ import plot_tensor, save_plot, plot_curve, plot_curve2
 from utils_d import zero_mean_unit_var_norm
@@ -38,7 +39,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='run inference on trained musiclm model')
     parser = argparse.ArgumentParser(description='train diffusion song')
     parser.add_argument('--n_samples', default=1, type=int)
-    parser.add_argument('--bivgan_ckpt', default='../weights/bigvgan_24khz_100band')
+    parser.add_argument('--bivgan_ckpt', default='nvidia/bigvgan_v2_24khz_100band_256x')
 
     parser.add_argument('--ckpt', default='../weights/fastsag.pt')
     parser.add_argument('--data_dir', default='../tmp_data')
@@ -54,7 +55,8 @@ if __name__ == '__main__':
     sample_rate = 24000
 
     wav2vec = create_hubert_kmeans_from_config(kmeans_path=None, device='cpu')
-    bigvgan = BigVGAN(args.bivgan_ckpt)
+    #bigvgan = BigVGAN(args.bivgan_ckpt)
+    bigvgan = BigVGANWrapper(args.bivgan_ckpt)
 
     model = FastSAG(1, 64, 100, dec_dim, beta_min, beta_max, pe_scale, \
             vocoder=bigvgan, wav2vec=wav2vec, mix_type='wavenet').cuda()
