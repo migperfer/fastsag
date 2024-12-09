@@ -39,7 +39,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='run inference on trained musiclm model')
     parser = argparse.ArgumentParser(description='train diffusion song')
     parser.add_argument('--n_samples', default=1, type=int)
-    parser.add_argument('--bivgan_ckpt', default='nvidia/bigvgan_v2_24khz_100band_256x')
+    parser.add_argument('--bivgan_ckpt', default='nvidia/bigvgan_24khz_100band')
 
     parser.add_argument('--ckpt', default='../weights/fastsag.pt')
     parser.add_argument('--data_dir', default='../tmp_data')
